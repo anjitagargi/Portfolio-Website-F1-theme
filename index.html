@@ -127,7 +127,7 @@ h1.page{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;
 .bar{width:180px;height:4px;background:var(--line);border-radius:2px;overflow:hidden}.bar i{display:block;height:100%;width:38%;background:var(--red)}
 
 /* ---------- results ---------- */
-.thead,.rowbtn{display:grid;grid-template-columns:48px 1fr 220px 220px 64px;gap:16px;align-items:center;padding:0 20px;width:100%;text-align:left}
+.thead,.rowbtn{display:grid;grid-template-columns:48px 1fr 240px 280px;gap:16px;align-items:center;padding:0 20px;width:100%;text-align:left}
 .thead{padding-bottom:10px}
 .rowwrap{border-top:1px solid var(--line)}
 .rowbtn{min-height:76px}
@@ -138,6 +138,8 @@ h1.page{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;
 .rowbtn .su{display:block;color:var(--muted);font-size:14px;font-family:var(--body);font-weight:400;letter-spacing:0}
 .badge{background:var(--purple);color:#fff;font-size:11px;letter-spacing:.1em;padding:3px 8px;border-radius:999px;font-family:var(--label);text-transform:uppercase}
 .rowbtn .st{color:var(--muted);font-size:14px}
+.tagb{border:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:.1em;padding:3px 8px;border-radius:999px;font-family:var(--label);text-transform:uppercase}
+.nolink{color:var(--muted);font-size:14px}
 .rowbtn .yr{text-align:right;color:var(--muted);font-family:var(--display);font-weight:500;font-size:14px}
 .report{display:none;padding:8px 20px 28px 84px;background:var(--panel2);border-top:1px solid var(--line)}
 .rowwrap.open .report{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;animation:open .25s ease-out}
@@ -248,6 +250,7 @@ textarea{min-height:140px;resize:vertical}
 html.carcursor #ccar{display:block}
 html.hidecursor,html.hidecursor *{cursor:none!important}
 html.hidecursor input,html.hidecursor textarea{cursor:text!important}
+html.hidecursor a,html.hidecursor button,html.hidecursor summary,html.hidecursor [role=switch]{cursor:pointer!important}
 #ccar{transition:opacity .25s}
 #ccar.dim{opacity:.25!important}
 #garage{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
@@ -278,7 +281,6 @@ html.hidecursor input,html.hidecursor textarea{cursor:text!important}
 #gmsg{min-height:24px;margin:12px 0 4px;font-weight:500;font-size:17px;color:var(--muted)}
 .gstats{display:flex;gap:24px;justify-content:center;color:var(--muted);font-size:14px}
 .gstats b{color:var(--text);font-family:var(--display)}
-@media (hover:none),(pointer:coarse){#garage,#ccar{display:none!important}}
 @media (max-width:820px){#garage{bottom:calc(104px + env(safe-area-inset-bottom,0px))}}
 @media print{#garage,#ccar{display:none!important}}
 /* ---------- mobile bottom nav ---------- */
@@ -293,7 +295,7 @@ html.hidecursor input,html.hidecursor textarea{cursor:text!important}
 }
 @media (max-width:820px){
   .app{padding:16px 16px calc(112px + env(safe-area-inset-bottom,0px))}
-  .pillnav,.tools .seg{display:none}
+  .pillnav{display:none}
   .top{margin-bottom:16px}
   .brand b{font-size:26px}
   .hero{padding:28px 22px 32px;min-height:0;border-radius:28px}
@@ -304,7 +306,7 @@ html.hidecursor input,html.hidecursor textarea{cursor:text!important}
   .cells{grid-template-columns:repeat(2,1fr)}
   .cell,.cell:nth-child(4){padding:0;border:0}
   .thead{display:none}
-  .rowbtn{grid-template-columns:36px 1fr 52px;padding:12px 16px}
+  .rowbtn{grid-template-columns:36px 1fr;padding:12px 16px}
   .rowbtn .st,.rowbtn .oc{display:none}
   .rowbtn .su{display:block}
   .report{padding:8px 16px 24px}
@@ -333,6 +335,14 @@ html.hidecursor input,html.hidecursor textarea{cursor:text!important}
   .paper{padding:0;max-width:none;border-radius:0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* clickable cards */
+.clickcard{position:relative;transition:border-color .2s,background .2s}
+.clickcard:hover{border-color:var(--red)}
+.cover{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.clickcard a:not(.cover),.clickcard .btn{position:relative;z-index:2}
+.cell{position:relative}
+.cell>a::after{content:'';position:absolute;inset:0}
+.cell:hover .v{color:var(--red-text)}
 /* responsive hardening */
 body{overflow-x:clip}
 img,svg,canvas{max-width:100%}
@@ -364,8 +374,25 @@ main,.view,.panel,.hero,.stint,.two>*,.pitgrid>*{min-width:0}
   .sx .go{font-size:clamp(18px,6vw,26px)}
   .bottom a{font-size:11px}
   .club{flex-direction:column}
+  .tools{flex:1 1 100%;justify-content:space-between}
+  .seg a{padding:7px 12px}
   .thumb{width:64px;height:44px}
 }
+/* trial map */
+.circuit.map .route,.circuit.map .rest{fill:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:round}
+.circuit.map .route{stroke:#d6402f}
+.circuit.map .rest{stroke:#b9a4a1}
+.circuit.map .lead{stroke:#9a8a88;stroke-width:3}
+.circuit.map text.cap{fill:#f2c14e;font-size:44px;letter-spacing:.14em}
+.circuit.map .stop{fill:#d6402f;stroke:#fff;stroke-width:6}
+.circuit.map text{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:38px;letter-spacing:.08em;fill:#f1e6e4}
+@media (max-width:820px){.circuit.map{max-width:100%}.circuit.map text{font-size:48px}}
+.circuit.map .car{pointer-events:none}
+.circuit.map .hit{cursor:pointer;outline:none}
+.circuit.map .hit:focus-visible{stroke:#f2c14e;stroke-width:6}
+html.hidecursor .circuit.map .hit{cursor:pointer!important}
+.circuit.map #tip rect{fill:#12141b;stroke:#4a4f5e;stroke-width:3}
+.circuit.map #tip text{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:46px;letter-spacing:.1em;fill:#f3f4f7;dominant-baseline:central}
 </style>
 </head>
 <body>
@@ -402,12 +429,7 @@ main,.view,.panel,.hero,.stint,.two>*,.pitgrid>*{min-width:0}
       <section class="view" id="v-home" aria-label="Home">
         <div class="hero">
           <div class="ghost" aria-hidden="true">01</div>
-          <svg class="circuit" viewBox="0 0 400 260" role="img" aria-label="Circuit outline with a car marker lapping the track">
-            <path id="trk" class="track" d="M60 190 C40 150 70 110 120 100 L190 90 C230 84 250 50 300 48 C350 46 372 80 350 112 C330 140 290 140 270 160 C250 182 270 214 230 220 L110 226 C80 228 66 212 60 190 Z"/>
-            <path class="sector" d="M300 48 C350 46 372 80 350 112"/>
-            <text x="318" y="38">S1 Projects</text><text x="278" y="176">S2 Career</text><text x="66" y="246">S3 Skills</text>
-            <g class="car"><circle r="20" fill="#e8291f" opacity=".22"/><circle r="11" fill="#e8291f" opacity=".3"/><g transform="scale(1.15)" stroke="#f3f4f7" stroke-width=".7" stroke-linejoin="round"><rect x="-15" y="-6.5" width="4" height="13" rx=".6" fill="#14161c"/><rect x="11" y="-6.5" width="3.4" height="13" rx=".6" fill="#14161c"/><rect x="-10" y="-8.2" width="6.5" height="4.4" rx="1" fill="#0a0b10"/><rect x="-10" y="3.8" width="6.5" height="4.4" rx="1" fill="#0a0b10"/><rect x="5.5" y="-7.6" width="5" height="3.8" rx="1" fill="#0a0b10"/><rect x="5.5" y="3.8" width="5" height="3.8" rx="1" fill="#0a0b10"/><path d="M-11 -2.6 L3 -2.6 L12 -.9 L12 .9 L3 2.6 L-11 2.6 Z" fill="#14161c"/><circle cx="-1" cy="0" r="1.9" fill="#e8291f" stroke="none"/></g><animateMotion dur="14s" repeatCount="indefinite" rotate="auto"><mpath href="#trk"/></animateMotion></g>
-          </svg>
+          <svg class="circuit map" viewBox="0 0 1908 1114" role="img" aria-label="Home circuits: route map of places I have lived, from Srinagar to Bangalore, with a car lapping the track"><path id="trk" d="M232 764 C262 756 285 752 309 743 C365 720 400 668 455 642 C500 620 545 612 592 607 C575 640 520 700 508 740 C500 780 520 805 548 819 C600 840 680 862 749 872 C820 876 900 874 940 870 C990 862 1020 830 1030 790 C1045 730 1060 650 1075 580 C1085 530 1120 512 1165 515 C1250 525 1420 548 1540 572 C1580 580 1610 575 1596 548 C1580 520 1500 450 1415 385 C1370 345 1330 290 1290 255 C1250 218 1200 208 1150 212 C1050 225 950 240 880 260 C800 285 740 320 650 370 C560 420 490 445 440 500 C380 560 330 640 285 700 C262 732 245 748 232 764 Z" fill="none" stroke="none"/><path class="rest" d="M1415 385 C1370 345 1330 290 1290 255 C1250 218 1200 208 1150 212 C1050 225 950 240 880 260 C800 285 740 320 650 370 C560 420 490 445 440 500 C380 560 330 640 285 700 C262 732 245 748 232 764"/><path class="route" d="M232 764 C262 756 285 752 309 743 C365 720 400 668 455 642 C500 620 545 612 592 607 C575 640 520 700 508 740 C500 780 520 805 548 819 C600 840 680 862 749 872 C820 876 900 874 940 870 C990 862 1020 830 1030 790 C1045 730 1060 650 1075 580 C1085 530 1120 512 1165 515 C1250 525 1420 548 1540 572 C1580 580 1610 575 1596 548 C1580 520 1500 450 1415 385"/><circle class="stop" cx="232" cy="764" r="17"/><circle class="stop" cx="309" cy="743" r="17"/><circle class="stop" cx="455" cy="642" r="17"/><circle class="stop" cx="590" cy="606" r="17"/><circle class="stop" cx="596" cy="617" r="17"/><circle class="stop" cx="489" cy="754" r="17"/><circle class="stop" cx="548" cy="819" r="17"/><circle class="stop" cx="749" cy="872" r="17"/><circle class="stop" cx="1015" cy="862" r="17"/><circle class="stop" cx="1092" cy="501" r="17"/><circle class="stop" cx="1636" cy="594" r="17"/><text class="cap" x="30" y="95">HOME CIRCUITS</text><g class="car"><circle r="110" fill="#e8291f" opacity=".22"/><circle r="60" fill="#e8291f" opacity=".3"/><g transform="scale(5.5)" stroke="#f3f4f7" stroke-width=".6" stroke-linejoin="round"><rect x="-15" y="-6.5" width="4" height="13" rx=".6" fill="#14161c"/><rect x="11" y="-6.5" width="3.4" height="13" rx=".6" fill="#14161c"/><rect x="-10" y="-8.2" width="6.5" height="4.4" rx="1" fill="#0a0b10"/><rect x="-10" y="3.8" width="6.5" height="4.4" rx="1" fill="#0a0b10"/><rect x="5.5" y="-7.6" width="5" height="3.8" rx="1" fill="#0a0b10"/><rect x="5.5" y="3.8" width="5" height="3.8" rx="1" fill="#0a0b10"/><path d="M-11 -2.6 L3 -2.6 L12 -.9 L12 .9 L3 2.6 L-11 2.6 Z" fill="#e8291f"/><circle cx="-1" cy="0" r="1.9" fill="#14161c" stroke="none"/></g><animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#trk"/></animateMotion></g><circle class="hit" cx="232" cy="764" r="55" tabindex="0" role="button" aria-label="Srinagar" data-name="Srinagar" fill="transparent"/><circle class="hit" cx="309" cy="743" r="50" tabindex="0" role="button" aria-label="Udhampur" data-name="Udhampur" fill="transparent"/><circle class="hit" cx="455" cy="642" r="55" tabindex="0" role="button" aria-label="Chandigarh" data-name="Chandigarh" fill="transparent"/><circle class="hit" cx="582" cy="594" r="26" tabindex="0" role="button" aria-label="Hindon" data-name="Hindon" fill="transparent"/><circle class="hit" cx="606" cy="632" r="26" tabindex="0" role="button" aria-label="Delhi" data-name="Delhi" fill="transparent"/><circle class="hit" cx="489" cy="754" r="50" tabindex="0" role="button" aria-label="Bhatinda" data-name="Bhatinda" fill="transparent"/><circle class="hit" cx="548" cy="819" r="55" tabindex="0" role="button" aria-label="Suratgarh" data-name="Suratgarh" fill="transparent"/><circle class="hit" cx="749" cy="872" r="55" tabindex="0" role="button" aria-label="Jodhpur" data-name="Jodhpur" fill="transparent"/><circle class="hit" cx="1015" cy="862" r="55" tabindex="0" role="button" aria-label="Vadodara" data-name="Vadodara" fill="transparent"/><circle class="hit" cx="1092" cy="501" r="55" tabindex="0" role="button" aria-label="Nagpur" data-name="Nagpur" fill="transparent"/><circle class="hit" cx="1636" cy="594" r="55" tabindex="0" role="button" aria-label="Bangalore" data-name="Bangalore" fill="transparent"/><g id="tip" visibility="hidden" pointer-events="none"><rect/><text/></g></svg>
           <div class="kicker"><span class="label" style="color:var(--text)">Driver focus</span></div>
           <h1>ANJITA<br>CHANDORA</h1>
           <p class="role">Software Engineer at Flipkart</p>
@@ -426,7 +448,7 @@ main,.view,.panel,.hero,.stint,.two>*,.pitgrid>*{min-width:0}
           </div>
         </div>
 
-        <section class="panel stint" aria-label="Current stint">
+        <section class="panel stint clickcard" aria-label="Current stint"><a class="cover" href="#calendar" aria-label="See my career timeline"></a>
           <div class="head"><div class="dotrow"><i class="dot"></i><span class="label">Now</span></div><h2>Current stint</h2></div>
           <div><p class="role">Software Developer, Flipkart</p>
             <p class="desc">Building Flipkart’s Altair DBaaS — the control plane for MySQL (Percona) cluster provisioning, scaling, failover, and lifecycle across multi-zone deployments. Work spans Go/gRPC/MongoDB backends, React UIs, observability/alerting, GenAI-assisted MySQL tuning, and production on-call.</p>
@@ -434,10 +456,10 @@ main,.view,.panel,.hero,.stint,.two>*,.pitgrid>*{min-width:0}
           <a class="btn p" href="#radio">Say hello <span aria-hidden="true">→</span></a>
         </section>
         <div class="two">
-          <div class="panel"><div class="ph"><h2>Standings</h2><span class="label">Top projects</span></div>
+          <div class="panel clickcard"><a class="cover" href="#results" aria-label="See all results"></a><div class="ph"><h2>Standings</h2><span class="label">Top projects</span></div>
             <div class="stand" id="standHome"></div>
             <p style="margin:12px 0 0"><a class="link" href="#results">View all results →</a></p></div>
-          <div class="panel hl"><div class="ph"><h2>Recognition</h2><span class="label">Achievements</span></div><a href="#results"><span class="thumb"></span><span><b>Airtel SheCodes finalist</b><small>Selected in top 10 of 4,000 teams across India</small></span></a><a href="#results"><span class="thumb"></span><span><b>Mercari Women Hackathon finalist</b><small>Among the top 30 selected</small></span></a><a href="#results"><span class="thumb"></span><span><b>Top 50 Female Coders, CodeElevate’23 finalist</b><small>Top 50, earning the Wonder Women title at Amazon HackOn Season 4</small></span></a><a href="#results"><span class="thumb"></span><span><b>Amazon ML Summer School ’24</b><small>Selected for Amazon’s Machine Learning program</small></span></a><a href="#results"><span class="thumb"></span><span><b>GHC Scholar ’23</b><small>One of 3,000 global scholars for the virtual GHC event</small></span></a><p style="margin:12px 0 0"><a class="link" href="#results">See my projects →</a></p></div>
+          <div class="panel hl clickcard"><a class="cover" href="#results" aria-label="See my projects"></a><div class="ph"><h2>Recognition</h2><span class="label">Achievements</span></div><a href="#results"><span class="thumb"></span><span><b>Airtel SheCodes finalist</b><small>Selected in top 10 of 4,000 teams across India</small></span></a><a href="#results"><span class="thumb"></span><span><b>Mercari Women Hackathon finalist</b><small>Among the top 30 selected</small></span></a><a href="#results"><span class="thumb"></span><span><b>Top 50 Female Coders, CodeElevate’23 finalist</b><small>Top 50, earning the Wonder Women title at Amazon HackOn Season 4</small></span></a><a href="#results"><span class="thumb"></span><span><b>Amazon ML Summer School ’24</b><small>Selected for Amazon’s Machine Learning program</small></span></a><a href="#results"><span class="thumb"></span><span><b>GHC Scholar ’23</b><small>One of 3,000 global scholars for the virtual GHC event</small></span></a><p style="margin:12px 0 0"><a class="link" href="#results">See my projects →</a></p></div>
         </div>
 
         <div class="now"><span class="tagp">NOW</span><div class="txt"><b>Building: F1 portfolio website</b><small>Feel the F1 experience, one lap at a time.</small></div></div>
@@ -447,7 +469,7 @@ main,.view,.panel,.hero,.stint,.two>*,.pitgrid>*{min-width:0}
       <section class="view" id="v-results" aria-label="Results">
         <h1 class="page">Results</h1><p class="lede">Projects, ranked by impact. Select a row for the race report: problem, my role, outcome.</p>
         <div class="panel" style="padding:20px 0 0;overflow:hidden">
-          <div class="thead label"><span>Pos</span><span>Project</span><span>Stack</span><span>Outcome</span><span style="text-align:right">Year</span></div>
+          <div class="thead label"><span>Pos</span><span>Project</span><span>Stack</span><span>Outcome</span></div>
           <div id="resRows"></div>
         </div>
       </section>
@@ -536,20 +558,24 @@ const VIEWS=[
  {id:'radio',label:'Radio',sub:'Contact',ic:'<path d="M4 6h16v10H9l-5 4z"/>'}
 ];
 const PROJECTS=[
- {t:'Altair AutoPilot',s:'AI tuning advice for MySQL',st:'LangChain, FAISS, OpenAI API',o:'Root-cause analysis from alert history',y:2025,pts:'GenAI',fl:true,
-  p:'MySQL query alerts needed manual root-cause analysis and tuning.',r:'Built the tool with GenAI and Agentic RAG over historical query alerts.',o2:'Analyses past alerts, finds root causes and generates context-aware optimisation recommendations.'},
- {t:'ClusterControl UI',s:'Control panel for Kubernetes MySQL clusters',st:'React, TypeScript, Helm',o:'Health, topology and config in one UI',y:2025,pts:'React',
-  p:'Teams needed one place to manage K8s MySQL Group Replication clusters.',r:'Built the UI. Worked with Helm-based deployment pipelines and Cosmos and Grafana alerting.',o2:'Cluster health monitoring, topology visualisation and member configuration, with better observability across staging and production.'},
- {t:'Altair DBaaS Platform',s:'Flipkart’s managed MySQL platform',st:'Go, gRPC, MongoDB',o:'APIs, orchestrator, health checks',y:2025,pts:'Go',
-  p:'Altair provisions, scales and manages MySQL (Percona) clusters across multiple zones.',r:'Developed backend features. Handled production bug fixes and on-call rotations.',o2:'Shipped REST API enhancements, orchestrator workflows and health-check pipelines.'},
- {t:'GenAI Prompt Portal',s:'Prompt management at Clearwater Analytics',st:'Java, Spring Boot, React, MySQL',o:'AI prompts inside the company platform',y:2024,pts:'Java',
-  p:'AI prompts needed a managed way into the company platform.',r:'Designed the frontend-backend pipeline. Built and tested REST APIs with Swagger.',o2:'Efficient prompt execution and response handling, documented and validated with Swagger.'},
- {t:'TickEase',s:'Event ticketing app',st:'SheCodes Airtel final project',o:'Top 10 of 4,000 teams',y:'–',pts:'App',
-  p:'Build an event ticketing app that works for every attendee.',r:'Built demand-based dynamic pricing, third-party cab booking and advanced event filters.',o2:'Airtel SheCodes finalist, with colourblind-friendly UI adjustments for accessibility.'},
- {t:'Event Reminder Bot',s:'Twitter bot for event reminders',st:'Node.js, Twitter API v2, node-cron',o:'Scheduled, personalised reminders',y:'–',pts:'Bot',
+ {t:'DebugSage',s:'Multi-agent debugging assistant for MySQL',st:'LangChain, FAISS, RAG',o:'Docs-guided, read-only diagnostics, tailored fixes',pts:'GenAI',fl:true,gh:'https://github.com/anjitagargi/MutliAgent',demo:'https://github.com/anjitagargi/MutliAgent#demo',
+  p:'Version migrations, deprecated syntax and cryptic errors make MySQL troubleshooting slow and manual.',
+  r:'Designed and built the multi-agent workflow: a DocSearch agent over versioned MySQL docs (FAISS), a DB Analysis agent that runs safe read-only diagnostic queries, and a Solution agent that combines both.',
+  o2:'Turns a plain-English question into version-specific, step-by-step fixes with SQL and verification commands, shown on query-performance and replication-lag tests.'},
+ {t:'TickEase',s:'Event ticketing app, SheCodes Airtel final project',st:'React.js, Node.js, JavaScript',o:'Top 10 of 4,000 teams',pts:'App',gh:'https://github.com/anjitagargi/TickEase',
+  p:'Ticket prices rarely react to demand, getting to the venue is a separate booking, and event discovery is rarely built with accessibility in mind.',
+  r:'Built the demand-based dynamic pricing logic, integrated third-party cab booking into the ticket purchase flow, and developed advanced event filters with colourblind-friendly UI adjustments.',
+  o2:'Reached the Airtel SheCodes final, top 10 of 4,000 teams across India, with prices that move with demand, a cab booked at checkout, and an event feed that everyone can read.'},
+ {t:'Event Reminder Bot',s:'Twitter bot for event reminders',st:'Node.js, Twitter API v2, node-cron',o:'Scheduled, personalised reminders',pts:'Bot',gh:'https://github.com/anjitagargi/Event-Remainder-TwitterBot',
   p:'Event organisers needed scheduled reminders and personalised notifications.',r:'Built the bot with customisable messages, images and schedule intervals.',o2:'Automated reminders configured by editing messages, images and intervals.'},
- {t:'CerviCare',s:'Cervical cancer detection and awareness',st:'React.js, Node.js, JavaScript',o:'Diagnostic tool and awareness platform',y:'–',pts:'Web',
-  p:'Support cervical cancer detection and community outreach.',r:'Implementing and enhancing features for the Diagnostic Tool and Awareness Platform.',o2:'Features that advance the initiative’s detection and outreach goals.'}
+ {t:'Soulmate Not Found',s:'Why look for a soulmate when you can look at our 404.',st:'HTML, CSS, JavaScript',o:'A playful 404 page, live on Netlify',pts:'Fun',gh:'https://github.com/anjitagargi/Soulmate-Not-Found',demo:'https://error404soulmate.netlify.app/',
+  p:'404 pages are dead ends that nobody enjoys landing on.',r:'Designed and built it from scratch with HTML, CSS and JavaScript.',o2:'A shareable, tongue-in-cheek page that turns a broken link into a small joke, live on Netlify.'},
+ {t:'CerviCare',s:'Cervical cancer detection and awareness',st:'React.js, Node.js, JavaScript',o:'Diagnostic tool and awareness platform',pts:'Web',gh:'https://github.com/anjitagargi/CerviCare',
+  p:'Support cervical cancer detection and community outreach.',r:'Implementing and enhancing features for the Diagnostic Tool and Awareness Platform.',o2:'Features that advance the initiative’s detection and outreach goals.'},
+ {t:'Movie Management System',s:'Movie review website',st:'HTML, CSS, JavaScript',o:'Movie review website',pts:'Web',gh:'https://github.com/anjitagargi/Movie-Management-System',
+  p:'Movie fans want one place to browse films and read reviews.',r:'Built the whole website with HTML, CSS and JavaScript.',o2:'A movie review website built with HTML, CSS and JavaScript.'},
+ {t:'PawPal',s:'Pet adoption mobile app',st:'React Native (Expo), Firebase, Clerk',o:'Browse, favourite and chat about pets',pts:'App',gh:'https://github.com/anjitagargi/PawPal',
+  p:'Finding a pet to adopt means jumping between listings, shortlists and chats with owners.',r:'Forked from ahanban15/PawPal and built on its React Native (Expo) codebase.',o2:'An app to browse pets, save favourites and chat with owners, with Firebase for data and Clerk for sign-in and CAPTCHA.'}
 ];
 const ROUNDS=[
  {r:'R01',t:'Software Developer (full-time)',co:'Flipkart',d:'Feb 2025 to now',a:2025.1,b:2026.85,tyre:'Soft',c:'var(--red)',b1:['Run core database infrastructure for 1,500+ MySQL clusters, with 24/7 on-call.','Led the MySQL 8.0 to 8.4 upgrade: compatibility validation, query optimisation and cluster stability.','Built near-zero-downtime Altair-to-Altair migration workflows.','Built Altair AutoPilot (AI MySQL tuning) and the ClusterControl UI. Backend in Go, gRPC and MongoDB.']},
@@ -580,10 +606,10 @@ function drawNav(cur){
 $('#resRows').innerHTML=PROJECTS.map((p,i)=>`<div class="rowwrap" data-i="${i}">
  <button class="rowbtn" aria-expanded="false" aria-controls="rep${i}">
   <span class="pos">P${i+1}</span>
-  <span class="ti"><span>${p.t}${p.fl?' <span class="badge">Fastest lap</span>':''}<span class="su">${p.s}</span></span></span>
-  <span class="st">${p.st}</span><span class="oc">${p.o}</span><span class="yr">${p.y}</span></button>
+  <span class="ti"><span>${p.t}${p.fl?' <span class="badge">Fastest lap</span>':''}${p.tag?' <span class="tagb">'+p.tag+'</span>':''}<span class="su">${p.s}</span></span></span>
+  <span class="st">${p.st}</span><span class="oc">${p.o}</span></button>
  <div class="report" id="rep${i}"><div><h4>Problem</h4><p>${p.p}</p></div><div><h4>My role</h4><p>${p.r}</p></div><div><h4>Result</h4><p>${p.o2}</p></div>
- <div class="links"><a class="link" href="#results">Case study →</a><a class="link" href="#results">Source →</a></div></div></div>`).join('');
+ <div class="links">${p.gh?'<a class="link" href="'+p.gh+'" target="_blank" rel="noopener noreferrer">GitHub →</a>':''}${p.demo?'<a class="link" href="'+p.demo+'" target="_blank" rel="noopener noreferrer">Demo →</a>':''}${(!p.gh&&!p.demo)?'<span class="nolink">Internal Flipkart tool, so there is no public repo or demo.</span>':''}</div></div></div>`).join('');
 document.querySelectorAll('.rowbtn').forEach(b=>b.addEventListener('click',()=>{
   const w=b.parentElement,open=!w.classList.contains('open');
   w.classList.toggle('open',open); b.setAttribute('aria-expanded',open);
@@ -620,7 +646,7 @@ $('#send').addEventListener('click',()=>{
 $('#paper').innerHTML=`<h1>Anjita Gargi Chandora</h1><p class="sub">Software Engineer · Bangalore, India · anjitagargi@gmail.com</p>
 <h2>Education</h2><div class="it"><span>National Institute of Technology Delhi, Computer Science and Engineering</span><span>Dec 2021 – May 2025</span></div><p>CGPA 8.50</p>
 <h2>Experience</h2>${ROUNDS.map(r=>`<div class="it"><span>${r.t}, ${r.co}</span><span>${r.d}</span></div><ul>${r.b1.map(x=>`<li>${x}</li>`).join('')}</ul>`).join('')}
-<h2>Projects</h2>${PROJECTS.map(p=>`<div class="it"><span>${p.t}</span><span>${p.y}</span></div><p>${p.o2}</p>`).join('')}
+<h2>Projects</h2>${PROJECTS.map(p=>`<div class="it"><span>${p.t}</span></div><p>${p.o2}</p>`).join('')}
 <h2>Technical skills</h2><p><b>Languages:</b> C, C++, Java, Python, HTML, CSS, JavaScript, Java Spring Boot</p><p><b>Web:</b> React.js, Node.js, Tailwind CSS, Bootstrap, MongoDB, MySQL</p><p><b>AI and ML:</b> Python, NumPy, Pandas, Scikit-Learn, Matplotlib, PyTorch, OpenAI API, LangChain</p><p><b>Other:</b> Git, GitHub, Figma, Data Structures and Algorithms, OOPS, Operating Systems, Computer Networking</p>
 <h2>Achievements</h2><ul><li>LeetCode rating 1770+, plus GeeksforGeeks.</li><li>Airtel SheCodes finalist: top 10 of 4,000 teams across India.</li><li>Mercari Women Hackathon finalist: top 30.</li><li>Top 50 Female Coders and CodeElevate’23 finalist: Wonder Women title at Amazon HackOn Season 4.</li><li>Amazon ML Summer School ’24. GHC Scholar ’23, one of 3,000 global scholars.</li></ul>
 <h2>Academics and extracurricular activities</h2><div class="it"><span>Deputy General Secretary (DGS), Clairvoyance Photography Club</span></div><p>Coordinated diverse club events, showcasing effective management skills.</p><div class="it" style="margin-top:8px"><span>PR and Content Sub Head, GDSC (Google Developer Student Club)</span></div><p>Led the graphics and content team, orchestrating successful club events and conducting interviews to enrich the organisation’s activities and outreach.</p>`;
@@ -653,17 +679,20 @@ $('#printBtn').addEventListener('click',()=>window.print());
  const save=()=>{try{localStorage.setItem('f1team',team);localStorage.setItem('f1cursor2',on?'on':'off');}catch(e){}};
  const car=$('#ccar'),gopen=$('#gopen'),gp=$('#gpanel'),tog=$('#ctoggle'),gt=$('#gteams');
  let x=-100,y=-100,tx=-100,ty=-100,ang=0,raf=0,seen=false;
- addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;if(!seen){x=tx;y=ty;seen=true;}const el=e.target;car.classList.toggle('dim',!!(el&&el.closest&&el.closest('input,textarea,[contenteditable]')));},{passive:true});
+ let fade=0;
+ const aim=e=>{tx=e.clientX;ty=e.clientY;if(!seen){x=tx;y=ty;seen=true;}car.style.opacity=1;clearTimeout(fade);const el=e.target;car.classList.toggle('dim',!!(el&&el.closest&&el.closest('a,button,input,textarea,select,summary,[role=switch],[role=button],[contenteditable]')));};
+ addEventListener('pointermove',aim,{passive:true});addEventListener('pointerdown',aim,{passive:true});
+ addEventListener('pointerup',e=>{if(e.pointerType==='touch'){clearTimeout(fade);fade=setTimeout(()=>{car.style.opacity=0;},1400);}});
  root.addEventListener('mouseleave',()=>{car.style.opacity=0;});root.addEventListener('mouseenter',()=>{car.style.opacity=1;});
  function loop(){
-  const dx=tx-x,dy=ty-y,d=Math.hypot(dx,dy),k=reduce?1:.28;x+=dx*k;y+=dy*k;
+  const dx=tx-x,dy=ty-y,d=Math.hypot(dx,dy),k=reduce?1:.42;x+=dx*k;y+=dy*k;
   if(d>4){let da=Math.atan2(dy,dx)-ang;da=Math.atan2(Math.sin(da),Math.cos(da));ang+=da*(reduce?1:.2);}
   car.style.transform='translate('+x+'px,'+y+'px) rotate('+ang+'rad) translate(-50%,-50%)';
   raf=requestAnimationFrame(loop);
  }
  gt.innerHTML=TEAMS.map((t,i)=>'<button type="button" data-i="'+i+'">'+svg(t[1],t[2],56)+'<span>'+t[0]+'</span></button>').join('');
  function apply(){
-  const t=TEAMS[team],active=on&&fine;
+  const t=TEAMS[team],active=on;
   root.classList.toggle('carcursor',active);root.classList.toggle('hidecursor',active);
   car.innerHTML=svg(t[1],t[2],44);
   gopen.firstElementChild.innerHTML=svg(t[1],t[2],30);
@@ -715,7 +744,30 @@ function route(){
   drawNav(h); window.scrollTo(0,0);
 }
 addEventListener('hashchange',route);route();
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){const a=document.querySelector('animateMotion');if(a){a.parentNode.setAttribute('transform','translate(60 190)');a.remove();}}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){const a=document.querySelector('animateMotion');if(a){a.parentNode.setAttribute('transform','translate(232 764)');a.remove();}}
+</script>
+<script>
+(function(){
+ const svg=document.querySelector('.circuit.map');if(!svg)return;
+ const tip=svg.querySelector('#tip'),box=tip.querySelector('rect'),txt=tip.querySelector('text');
+ function show(h){
+  txt.textContent=h.dataset.name.toUpperCase();txt.setAttribute('x',24);txt.setAttribute('y',0);
+  const b=txt.getBBox(),w=b.width+48,ht=b.height+34,cx=+h.getAttribute('cx'),cy=+h.getAttribute('cy');
+  let gx=Math.min(Math.max(cx-w/2,10),1908-w-10),gy=cy-ht-60;if(gy<10)gy=cy+60;
+  box.setAttribute('width',w);box.setAttribute('height',ht);box.setAttribute('rx',18);
+  txt.setAttribute('y',ht/2);tip.setAttribute('transform','translate('+gx+' '+gy+')');tip.setAttribute('visibility','visible');
+ }
+ const hide=()=>tip.setAttribute('visibility','hidden');
+ svg.querySelectorAll('.hit').forEach(h=>{
+  h.addEventListener('pointerenter',()=>show(h));
+  h.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hide();});
+  h.addEventListener('pointerdown',()=>show(h));
+  h.addEventListener('focus',()=>show(h));
+  h.addEventListener('blur',hide);
+ });
+ document.addEventListener('pointerdown',e=>{if(!e.target.closest||!e.target.closest('.circuit.map .hit'))hide();});
+ addEventListener('keydown',e=>{if(e.key==='Escape')hide();});
+})();
 </script>
 </body>
 </html>
